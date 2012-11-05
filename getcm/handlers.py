@@ -49,10 +49,10 @@ class BrowseHandler(BaseHandler):
         devicelist = Device.get_all()
 
         if 'dtime' not in self.devicedict or self.devicedict['dtime'] < time.time() - 300:
-        try:
-            devicemap = eval(open("/usr/local/share/devices.dict").read())
-        except:
-            devicemap = {}
+            try:
+                devicemap = eval(open("/usr/local/share/devices.dict").read())
+            except:
+                devicemap = {}
 
         for codename in devicelist:
            if codename in devicemap:
@@ -60,7 +60,7 @@ class BrowseHandler(BaseHandler):
            else:
                    self.devicedict[codename] = codename
 
-            self.devicedict['dtime'] = time.time()
+           self.devicedict['dtime'] = time.time()
 
         def respond(builds):
             return self.render("browse.mako", {'request_type': type, 'request_device': device, 'devices': devicelist,  'devicenames': self.devicedict, 'files': files, 'builds': builds})
